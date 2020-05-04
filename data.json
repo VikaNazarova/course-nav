@@ -1,0 +1,20 @@
+[
+  {
+    "name":"English for dumbasses",
+    "link":"https://coursera.com/eng-dumb",
+    "image":"/img/dumb.jpg",
+    "rating":"5"
+  },
+  {
+    "name":"Alright English",
+    "link":"https://coursera.com/eng-ok",
+    "image":"/img/ok.jpg",
+    "rating":"4"
+  },
+  {
+    "name":"Become Mastermind of English in 2 weeks!",
+    "link":"https://coursera.com/eng-naebalovo",
+    "image":"/img/cat.jpg",
+    "rating":"3"
+  }
+]
