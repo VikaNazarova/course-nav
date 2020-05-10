@@ -1,0 +1,20 @@
+body {
+	padding: 0; 
+	margin: 0;
+	font-family: sans-serif;
+	overflow-x: hidden;
+}
+section {
+	width: 80vw;
+	margin: 0 auto;
+}
+/*#allCourses{
+	display: flex;
+}
+#allCourses > div {
+	width: min-content;
+	margin: 2rem;
+}*/
+img {
+	width: 7rem;
+}
