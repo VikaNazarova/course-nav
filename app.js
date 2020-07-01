@@ -24,7 +24,7 @@
             let output = document.createElement('div');
             output.innerHTML = `
             <h3>${name}</h3>
-            <img src="${image}">
+            <img src=".${image}">
             <p>Rating: ${rating}/5</p>
             <a href="${link}">Go to course</a>`;
             outputWrapper.appendChild(output);
