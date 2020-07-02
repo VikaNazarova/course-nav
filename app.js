@@ -1,12 +1,10 @@
 // Module of getting courses (local file)
-    //MODULE
 
     fetch('data.json')
 	  .then(response => response.json())
 	  .then(courses => showListOfCourses(courses))
 	  .catch(err => ifError(err));
 
-    //VIEW
     let outputWrapper = document.getElementById('allCourses');
    
     function showListOfCourses(arr) {
@@ -33,33 +31,41 @@
 
 
 // Module of search
-    //MODULE
-    function getSearchResult(arr){
-        
-        let result = arr.find(course => course.name === arr).name
 
-        return result;
-    }
-
-    //VIEW
     let searchResults = document.querySelector('#searchResults');
-
-    function outputSearchResult (result) {
-        
-        // actual result is probably gonna be deconstructed and showed in a better way lol
-        searchResults.innerHTML = `<p>${result}</p>`;
-    }
-
-    //CONTROLLER
-    // Event of inputting search
     let searchField = document.querySelector('#searchField');
 
-    searchField.addEventListener('keyup', function(e){
+    function outputSearchResult(result) {
+        if (result.length !== 0) {
+            for (var {name, image, rating, link} of result) {
+                searchResults.innerHTML = `
+                <h2>Search results: </h2>
+                <div>
+                    <h3>${name}</h3>
+                    <img src=".${image}">
+                    <p>Rating: ${rating}/5</p>
+                    <a href="${link}">Go to course</a>
+                </div>
+                <br><hr>`;
+            }
+        } else {
+            searchResults.innerHTML = `
+            <h2>Search results: </h2>
+            <p>No results</p>`;
+        }
+    }
+
+    searchField.addEventListener('keyup', function(e){ // here should be probably also an event of actually submitting search query with pushing search button
         let searchQuery = e.target.value;
-        
-        //loadLocalCourses(getSearchResult);
-        
+
+        fetch('data.json')
+        .then(response => response.json())
+        .then(courses => 
+            outputSearchResult(
+                courses.filter(course => course.name.includes(searchQuery))
+            ) // it only gets one matching course =(
+        ) 
+        .catch(err => ifError(err));     
     });
 
-    // here should be also an event of actually submitting search query with pushing search button
-    // and it might or might not lead to another page ??? idk
+//end of module
