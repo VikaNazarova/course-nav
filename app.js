@@ -1,21 +1,26 @@
 // Module of getting courses (local file)
     //MODULE
-    let localCourses;
+    //let localCourses;
         
-    function loadLocalCourses(callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'data.json', true);
-        xhr.addEventListener('load', () => {
-            const response = JSON.parse(xhr.responseText);
-            callback(response);
-        });
+    // function loadLocalCourses(callback) {
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('GET', 'data.json', true);
+    //     xhr.addEventListener('load', () => {
+    //         const response = JSON.parse(xhr.responseText);
+    //         callback(response);
+    //     });
     
-        xhr.addEventListener('error', () => {
-            console.log('Not connected to resource');
-        });
+    //     xhr.addEventListener('error', () => {
+    //         console.log('Not connected to resource');
+    //     });
     
-        xhr.send();
-    }  
+    //     xhr.send();
+    // }  
+
+    fetch('data.json')
+	  .then(response => response.json())
+	  .then(courses => showListOfCourses(courses))
+	  .catch(err => console.log(err));
 
     //VIEW
     function showListOfCourses(arr) {
@@ -34,9 +39,9 @@
     //CONTROLLER
 
     // Event of page loading
-    document.addEventListener('DOMContentLoaded', e => {
-        loadLocalCourses(showListOfCourses);
-    });
+    // document.addEventListener('DOMContentLoaded', e => {
+    //     loadLocalCourses(showListOfCourses);
+    // });
 
 //end of module
 
