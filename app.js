@@ -1,31 +1,16 @@
 // Module of getting courses (local file)
     //MODULE
-    //let localCourses;
-        
-    // function loadLocalCourses(callback) {
-    //     const xhr = new XMLHttpRequest();
-    //     xhr.open('GET', 'data.json', true);
-    //     xhr.addEventListener('load', () => {
-    //         const response = JSON.parse(xhr.responseText);
-    //         callback(response);
-    //     });
-    
-    //     xhr.addEventListener('error', () => {
-    //         console.log('Not connected to resource');
-    //     });
-    
-    //     xhr.send();
-    // }  
 
     fetch('data.json')
 	  .then(response => response.json())
 	  .then(courses => showListOfCourses(courses))
-	  .catch(err => console.log(err));
+	  .catch(err => ifError(err));
 
     //VIEW
+    let outputWrapper = document.getElementById('allCourses');
+   
     function showListOfCourses(arr) {
-        for (var {name: name, image: image, rating: rating, link: link} of arr) {
-            let outputWrapper = document.getElementById('allCourses');
+        for (var {name, image, rating, link} of arr) {
             let output = document.createElement('div');
             output.innerHTML = `
             <h3>${name}</h3>
@@ -36,12 +21,12 @@
         }
     }
 
-    //CONTROLLER
-
-    // Event of page loading
-    // document.addEventListener('DOMContentLoaded', e => {
-    //     loadLocalCourses(showListOfCourses);
-    // });
+    function ifError(err) {
+        console.log(err);
+        let output = document.createElement('div');
+        output.innerHTML = `<h2>Sorry, we cant get courses :(</h2>`;
+        outputWrapper.appendChild(output);
+    }
 
 //end of module
 
@@ -72,7 +57,7 @@
     searchField.addEventListener('keyup', function(e){
         let searchQuery = e.target.value;
         
-        loadLocalCourses(getSearchResult);
+        //loadLocalCourses(getSearchResult);
         
     });
 
