@@ -36,23 +36,27 @@
     let searchField = document.querySelector('#searchField');
 
     function outputSearchResult(result) {
+    	searchResults.innerHTML = '';
+    	let output = document.createElement('div');
+    	output.innerHTML = `<h2>Search results: </h2>`;
+
         if (result.length !== 0) {
             for (var {name, image, rating, link} of result) {
-                searchResults.innerHTML = `
-                <h2>Search results: </h2>
-                <div>
-                    <h3>${name}</h3>
-                    <img src=".${image}">
-                    <p>Rating: ${rating}/5</p>
-                    <a href="${link}">Go to course</a>
-                </div>
-                <br><hr>`;
+	            output.innerHTML += `
+	            <div>
+		            <h3>${name}</h3>
+		            <img src=".${image}">
+		            <p>Rating: ${rating}/5</p>
+		            <a href="${link}">Go to course</a>
+	            <div>`;
             }
+
         } else {
-            searchResults.innerHTML = `
-            <h2>Search results: </h2>
-            <p>No results</p>`;
+            output.innerHTML += `<p>No results</p>`;
         }
+
+        output.innerHTML += `<br><hr>`;
+        searchResults.appendChild(output);
     }
 
     searchField.addEventListener('keyup', function(e){ // here should be probably also an event of actually submitting search query with pushing search button
@@ -62,10 +66,10 @@
         .then(response => response.json())
         .then(courses => 
             outputSearchResult(
-                courses.filter(course => course.name.includes(searchQuery))
-            ) // it only gets one matching course =(
+                courses.filter(course => course.name.toLowerCase().includes(searchQuery.toLowerCase()))
+            )
         ) 
-        .catch(err => ifError(err));     
+        .catch(err => ifError(err));
     });
 
 //end of module
