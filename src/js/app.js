@@ -1,6 +1,7 @@
+import '../css/style.css';
 // Module of getting courses (local file)
 
-    fetch('data.json')
+    fetch('./data.json')
 	  .then(response => response.json())
 	  .then(courses => showListOfCourses(courses))
 	  .catch(err => ifError(err));
@@ -20,7 +21,7 @@
     }
 
     function ifError(err) {
-        console.log(err);
+        //console.log(err);
         let output = document.createElement('div');
         output.innerHTML = `<h2>Sorry, we cant get courses :(</h2>`;
         outputWrapper.appendChild(output);

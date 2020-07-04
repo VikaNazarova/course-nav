@@ -1,0 +1,22 @@
+{
+	"name": "course-navigator",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "webpack-dev-server",
+		"build": "webpack"
+	},
+	"devDependencies": {
+		"copy-webpack-plugin": "^6.0.3",
+		"file-loader": "^6.0.0",
+		"webpack-cli": "^3.3.12"
+	},
+	"dependencies": {
+		"css-loader": "^3.6.0",
+		"html-webpack-plugin": "^4.3.0",
+		"style-loader": "^1.2.1",
+		"webpack": "^4.43.0",
+		"webpack-dev-server": "^3.11.0"
+	}
+}
