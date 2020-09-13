@@ -9,15 +9,13 @@
 <body>
 	<header>
 		<h1><a href="/">Course Navigator</a></h1>
-		<div id="searchForm">
+		<form id="searchForm" method="post">
 			<input id="searchField" name="searchField" type="text" placeholder="Name of the course">
-			<button id="button">Search</button>
-		</div>
+			<input type="submit" id="searchButton" value="Search">
+		</form>
 	</header>
 
-	<section>
-		<div id="searchResults"></div>
-	</section>
+	<section id="searchResults"></section>
 
 	<section>
 		<h2>All courses:</h2>
