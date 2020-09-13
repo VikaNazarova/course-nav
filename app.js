@@ -1,75 +1,84 @@
-// Module of getting courses (local file)
+// Module of getting courses (External API)
 
-    fetch('data.json')
-	  .then(response => response.json())
-	  .then(courses => showListOfCourses(courses))
-	  .catch(err => ifError(err));
+fetch('https://gist.githubusercontent.com/VikaNazarova/18108021850f79e70fbdc46a62056293/raw/45bb37abc84868f2c78bc83de541438700cdcbc9/gistfile1.txt')
+.then(response => response.json())
+.then(courses => showListOfCourses(courses))
+.catch(err => ifError(err));
 
-    let outputWrapper = document.getElementById('allCourses');
-   
-    function showListOfCourses(arr) {
-        for (var {name, image, rating, link} of arr) {
-            let output = document.createElement('div');
-            output.innerHTML = `
-            <h3>${name}</h3>
-            <img src=".${image}">
-            <p>Rating: ${rating}/5</p>
-            <a href="${link}">Go to course</a>`;
-            outputWrapper.appendChild(output);
-        }
-    }
+let outputWrapper = document.getElementById('allCourses');
 
-    function ifError(err) {
-        console.log(err);
-        let output = document.createElement('div');
-        output.innerHTML = `<h2>Sorry, we cant get courses :(</h2>`;
-        outputWrapper.appendChild(output);
-    }
+function showListOfCourses(arr) {
+
+    //limited arr for developmet
+    arr.length = 10;
+    console.log(arr);
+
+  for (var {course_title, image, description, link, provider, price} of arr) {
+      let output = document.createElement('div');
+      output.classList.add('card');
+      var shortDesc = description.substr(0, 200) + "...";
+      output.innerHTML = `
+      <img src="${image}">
+      <h3>${course_title}</h3>
+      <div>
+        <small>by ${provider}, </small>
+        <small>${price}</small>
+      </div>
+      <p>${shortDesc}</p>
+      <a href="${link}">Go to course</a>`;
+      outputWrapper.appendChild(output);
+  }
+}
+
+function ifError(err) {
+  console.log(err);
+  let output = document.createElement('div');
+  output.innerHTML = `<h2>Sorry, we cant get courses :(</h2>`;
+  outputWrapper.appendChild(output);
+}
 
 //end of module
 
-
-
 // Module of search
 
-    let searchResults = document.querySelector('#searchResults');
-    let searchField = document.querySelector('#searchField');
+let searchResults = document.querySelector('#searchResults');
+let searchField = document.querySelector('#searchField');
 
-    function outputSearchResult(result) {
-    	searchResults.innerHTML = '';
-    	let output = document.createElement('div');
-    	output.innerHTML = `<h2>Search results: </h2>`;
+function outputSearchResult(result) {
+    searchResults.innerHTML = '';
+    let output = document.createElement('div');
+    output.innerHTML = `<h2>Search results: </h2>`;
 
-        if (result.length !== 0) {
-            for (var {name, image, rating, link} of result) {
-	            output.innerHTML += `
-	            <div>
-		            <h3>${name}</h3>
-		            <img src=".${image}">
-		            <p>Rating: ${rating}/5</p>
-		            <a href="${link}">Go to course</a>
-	            <div>`;
-            }
-
-        } else {
-            output.innerHTML += `<p>No results</p>`;
+    if (result.length !== 0) {
+        for (var {course_title, image, description, link} of result) {
+            output.innerHTML += `
+            <div>
+                <h3>${course_title}</h3>
+                <img src="${image}">
+                <p>${description}</p>
+                <a href="${link}">Go to course</a>
+            <div>`;
         }
 
-        output.innerHTML += `<br><hr>`;
-        searchResults.appendChild(output);
+    } else {
+        output.innerHTML += `<p>No results</p>`;
     }
 
-    searchField.addEventListener('keyup', function(e){ // here should be probably also an event of actually submitting search query with pushing search button
-        let searchQuery = e.target.value;
+    output.innerHTML += `<br><hr>`;
+    searchResults.appendChild(output);
+}
 
-        fetch('data.json')
-        .then(response => response.json())
-        .then(courses => 
-            outputSearchResult(
-                courses.filter(course => course.name.toLowerCase().includes(searchQuery.toLowerCase()))
-            )
-        ) 
-        .catch(err => ifError(err));
-    });
+searchField.addEventListener('keyup', function(e){ // here should be probably also an event of actually submitting search query with pushing search button
+    let searchQuery = e.target.value;
+
+    fetch('https://gist.githubusercontent.com/VikaNazarova/18108021850f79e70fbdc46a62056293/raw/45bb37abc84868f2c78bc83de541438700cdcbc9/gistfile1.txt')
+    .then(response => response.json())
+    .then(courses => 
+        outputSearchResult(
+            courses.filter(course => course.course_title.toLowerCase().includes(searchQuery.toLowerCase()))
+        )
+    ) 
+    .catch(err => ifError(err));
+});
 
 //end of module
