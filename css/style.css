@@ -4,9 +4,15 @@ body {
 	font-family: sans-serif;
 	overflow-x: hidden;
 }
-section {
+section, header {
 	width: 80vw;
 	margin: 0 auto;
+}
+header {
+	display: flex;
+}
+header nav {
+	padding: 1rem 1rem 1rem 0;
 }
 /*#allCourses{
 	display: flex;
