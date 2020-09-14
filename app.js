@@ -5,37 +5,43 @@ fetch('https://gist.githubusercontent.com/VikaNazarova/18108021850f79e70fbdc46a6
 .catch(err => ifError(err));
 
 let outputWrapper = document.getElementById('allCourses');
+let loadMore = document.getElementById('loadMore');
 
 function showListOfCourses(arr) {
-
-    //limited arr for developmet
-    arr.length = 12;
-    console.log(arr);
-
-    for (var {course_title, image, description, link, provider, price} of arr) {
-        let output = document.createElement('div');
-        output.classList.add('card');
-        var shortDesc = description.substr(0, 200) + "...";
-        output.innerHTML = `
-        <a href="${link}" target="_blank">
-            <img src="${image}">
-        </a>
-        <h3>${course_title}</h3>
-        <div>
-        <small>by ${provider}, </small>
-        <small>${price}</small>
-        </div>
-        <p>${shortDesc}</p>
-        <a href="${link}" target="_blank">Go to course</a>`;
-        outputWrapper.appendChild(output);
+    slicedArr = arr.splice(0, 12);
+    function itemShow(slicedArr) {
+        for (var i = 0; i < slicedArr.length; i++) {
+            //var {course_title, image, description, link, provider, price} of arr
+            let {course_title, image, description, link, provider, price} = slicedArr[i];
+            let output = document.createElement('div');
+            output.classList.add('card');
+            var shortDesc = description.substr(0, 200) + "...";
+            output.innerHTML = `
+            <a href="${link}" target="_blank">
+                <img src="${image}">
+            </a>
+            <h3>${course_title}</h3>
+            <div>
+                <small>by ${provider}</small>
+                <small>${(price == undefined) ? '' : '- '+price }</small>
+            </div>
+            <p>${shortDesc}</p>
+            <a href="${link}" target="_blank">Go to course</a>`;
+            outputWrapper.appendChild(output);
+        }
     }
+    itemShow(slicedArr);
+    loadMore.addEventListener('click', function(e){
+        slicedArr1 = arr.splice(0, 12);
+        itemShow(slicedArr1);
+    });
 }
 
 function ifError(err) {
-  console.log(err);
-  let output = document.createElement('div');
-  output.innerHTML = `<h2>Sorry, we cant get courses :(</h2>`;
-  outputWrapper.appendChild(output);
+    console.log(err);
+    let output = document.createElement('div');
+    output.innerHTML = `<h2>Sorry, we couldn't get courses :(</h2>`;
+    outputWrapper.appendChild(output);
 }
 
 // Module of search
@@ -58,8 +64,8 @@ function outputSearchResult(result) {
                 </a>
                 <h3>${course_title}</h3>
                 <div>
-                <small>by ${provider}, </small>
-                <small>${price}</small>
+                    <small>by ${provider}, </small>
+                    <small>${price}</small>
                 </div>
                 <p>${shortDesc}</p>
                 <a href="${link}" target="_blank">Go to course</a>
@@ -72,7 +78,6 @@ function outputSearchResult(result) {
     searchResults.innerHTML = '<h2>Search results: </h2>';
     searchResults.appendChild(output);
 }
-
 
 searchForm.addEventListener('submit', function(e){
         e.preventDefault();
