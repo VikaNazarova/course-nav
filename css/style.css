@@ -7,13 +7,22 @@ body {
 a {
 	text-decoration: none;
 }
+a:hover {
+	text-decoration: underline;
+}
 header {
-	display: flex;
-	align-items: center;
+	
 	padding: 2rem;
 	background: #333;
-	flex-flow: wrap;
+	
 } 
+header div {
+	display: flex;
+	align-items: center;
+	flex-flow: wrap;
+	width: 80vw;
+	margin: 0 auto;
+}
 #searchForm {
 	margin: 0 auto;
 	flex-basis: 20rem;
@@ -44,9 +53,9 @@ h1 a {
 }
 .card {
 	padding: 1.5rem;
-    margin: 1rem;
+    margin: .5rem;
     box-shadow: 4px 4px 15px 0px rgba(50, 50, 50, 0.5);
-	flex-basis: 15rem;
+	flex-basis: 17rem;
 	background: #fff;
 }
 .card img {

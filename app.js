@@ -1,5 +1,4 @@
 // Module of getting courses (External API)
-
 fetch('https://gist.githubusercontent.com/VikaNazarova/18108021850f79e70fbdc46a62056293/raw/2f05dceca54ea0332417525fba6a700b49434c27/gistfile1.txt')
 .then(response => response.json())
 .then(courses => showListOfCourses(courses))
@@ -10,26 +9,26 @@ let outputWrapper = document.getElementById('allCourses');
 function showListOfCourses(arr) {
 
     //limited arr for developmet
-    arr.length = 10;
+    arr.length = 12;
     console.log(arr);
 
-  for (var {course_title, image, description, link, provider, price} of arr) {
-      let output = document.createElement('div');
-      output.classList.add('card');
-      var shortDesc = description.substr(0, 200) + "...";
-      output.innerHTML = `
-      <a href="${link}">
-        <img src="${image}">
-      </a>
-      <h3>${course_title}</h3>
-      <div>
+    for (var {course_title, image, description, link, provider, price} of arr) {
+        let output = document.createElement('div');
+        output.classList.add('card');
+        var shortDesc = description.substr(0, 200) + "...";
+        output.innerHTML = `
+        <a href="${link}" target="_blank">
+            <img src="${image}">
+        </a>
+        <h3>${course_title}</h3>
+        <div>
         <small>by ${provider}, </small>
         <small>${price}</small>
-      </div>
-      <p>${shortDesc}</p>
-      <a href="${link}">Go to course</a>`;
-      outputWrapper.appendChild(output);
-  }
+        </div>
+        <p>${shortDesc}</p>
+        <a href="${link}" target="_blank">Go to course</a>`;
+        outputWrapper.appendChild(output);
+    }
 }
 
 function ifError(err) {
@@ -39,34 +38,31 @@ function ifError(err) {
   outputWrapper.appendChild(output);
 }
 
-//end of module
-
 // Module of search
-
 let searchResults = document.querySelector('#searchResults');
 let searchField = document.querySelector('#searchField');
-// let searchButton = document.querySelector('#searchButton');
 let searchForm = document.querySelector('#searchForm');
 
 function outputSearchResult(result) {
     searchResults.innerHTML = '';
     searchResults.style.background = '#eee';
     let output = document.createElement('div');
-    //output.innerHTML = `<h2>Search results: </h2>`;
     output.classList.add('card-deck');
     if (result.length !== 0) {
         for (var {course_title, image, description, link, provider, price} of result) {
             var shortDesc = description.substr(0, 200) + "...";
             output.innerHTML += `
             <div class="card">
-                <img src="${image}">
+                <a href="${link}" target="_blank">
+                    <img src="${image}">
+                </a>
                 <h3>${course_title}</h3>
                 <div>
                 <small>by ${provider}, </small>
                 <small>${price}</small>
                 </div>
                 <p>${shortDesc}</p>
-                <a href="${link}">Go to course</a>
+                <a href="${link}" target="_blank">Go to course</a>
             <div>`;
         }
     } else {
@@ -104,5 +100,3 @@ searchForm.addEventListener('submit', function(e){
 //     ) 
 //     .catch(err => ifError(err));
 // });
-
-//end of module
